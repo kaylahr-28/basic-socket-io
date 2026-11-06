@@ -4,7 +4,8 @@ const compression = require('compression');
 const favicon = require('serve-favicon');
 const expressHandlebars = require('express-handlebars');
 
-const router = require('./router.js');
+const router = require('./router.js')
+const socketSetup = require('./io.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
@@ -24,8 +25,9 @@ app.set('view engine', 'handlebars');
 app.set('views', `${__dirname}/../views`);
 
 router(app);
+const server = socketSetup(app);
 
-app.listen(port, (err) => {
+server.listen(port, (err) => {
   if (err) {
     throw err;
   }
